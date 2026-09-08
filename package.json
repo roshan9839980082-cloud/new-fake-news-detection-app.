@@ -1,0 +1,18 @@
+{
+  "name": "fakenewsdetect-mongodb-gemini-render",
+  "version": "5.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FakeNewsDetect: HTML/CSS/JS frontend, Node.js backend, MongoDB storage, Gemini fact-checking, Firebase password reset, Render-ready",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check js/app.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  }
+}
