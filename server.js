@@ -281,9 +281,24 @@ async function runGemini({ text, imageBase64, imageMime }) {
 
 function safeStaticPath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
-  const rel = decoded === '/' ? 'Page/index.html' : decoded.replace(/^\/+/, '');
+
+  let rel;
+
+  if (decoded === '/') {
+    rel = 'Page/index.html';
+  } else if (decoded.startsWith('/Page/')) {
+    rel = decoded.substring(1);
+  } else if (decoded.endsWith('.html')) {
+    rel = `Page${decoded}`;
+  } else {
+    rel = decoded.replace(/^\/+/, '');
+  }
+
   const full = path.resolve(__dirname, rel);
-  return full.startsWith(path.resolve(__dirname) + path.sep) ? full : null;
+
+  return full.startsWith(path.resolve(__dirname) + path.sep)
+    ? full
+    : null;
 }
 const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
 function serveStatic(req, res) {
